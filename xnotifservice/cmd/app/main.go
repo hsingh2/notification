@@ -43,9 +43,8 @@ func init() {
 
 	// Log as JSON instead of the default ASCII formatter.
 	logger.SetFormatter(&logrus.JSONFormatter{})
-	logger.SetReportCaller(true)
 	logger.SetOutput(os.Stdout)
-	logger.SetLevel(logrus.WarnLevel)
+	logger.SetLevel(logrus.InfoLevel)
 
 	//initialize the configs
 	configs, err := ioutil.ReadFile(configFile)
@@ -64,19 +63,18 @@ func init() {
 	db, err = sql.Open("postgres", "localhost:26257/notificationdb?sslmode=disable")
 	if err != nil {
 		logger.WithFields(logrus.Fields{"error": err, "dbconn": "localhost:26257/notificationdb?sslmode=disable"}).Error("failed to open database connection")
-		//level.Error(logger).Log("error", "failed to open database connection", "DBError", db)
 		os.Exit(1)
 	}
 
 	//create a repository client
 	repository, err = cockroachdb.New(db, logger)
 	if err != nil {
-		//level.Error(logger).Log("exit", err)
+		logger.Error(err)
 		os.Exit(1)
 	}
 
 	// Create service discovery registry client
-	consul, err = admin.NewSDClient("192.168.1.20", "8500", "localhost", "9213", logger)
+	consul, err = admin.NewSDClient("192.168.1.20", "8500", "192.168.1.20", "9213", logger)
 	if err != nil {
 		//level.Error(logger).Log("exit", err)
 		os.Exit(1)
@@ -84,8 +82,8 @@ func init() {
 }
 
 func main() {
-	//level.Info(logger).Log("msg", "xnotification service started...")
-	//defer level.Info(logger).Log("msg", "xnotification service ended.")
+	logger.WithField("msg", "xnotification service started...").Info()
+	defer logger.WithField("msg", "xnotification service ended.").Info()
 
 	//add authentication
 	//authClient := server.NewAuthClient(cfg, logger)
@@ -118,8 +116,6 @@ func main() {
 	}()
 
 	go func() {
-		//level.Info(logger).Log("transport", "HTTP", "addr", serviceConfig.Server.Port)
-
 		server := &http.Server{
 			Addr:    fmt.Sprintf(":%d", serviceConfig.Server.Port),
 			Handler: router,
