@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
@@ -32,11 +32,11 @@ type ServiceDiscovery interface {
 }
 
 //NewSDClient ...
-func NewSDClient(consulAddress string, consulPort string, advertiseAddress string, advertisePort string, logger *log.Logger) (ServiceDiscovery, error) {
+func NewSDClient(consulAddress string, consulPort string, advertiseAddress string, advertisePort string, logger *logrus.Logger) (ServiceDiscovery, error) {
 
 	cClient, err := sd.NewClient(&sd.Config{Address: fmt.Sprintf("%s:%s", consulAddress, consulPort)})
 	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("error instantiating new consul client")
+		logger.WithFields(logrus.Fields{"error": err}).Error("error instantiating new consul client")
 		return nil, err
 	}
 

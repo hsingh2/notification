@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	template "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 //Error
@@ -19,11 +19,11 @@ var (
 // service implements the Order Service
 type service struct {
 	repository template.Repository
-	logger     *log.Logger
+	logger     *logrus.Logger
 }
 
 // NewTemplateService ...
-func NewTemplateService(rep template.Repository, logger *log.Logger) template.NotificationTemplateService {
+func NewTemplateService(rep template.Repository, logger *logrus.Logger) template.NotificationTemplateService {
 	return &service{
 		repository: rep,
 		logger:     logger,
@@ -32,9 +32,9 @@ func NewTemplateService(rep template.Repository, logger *log.Logger) template.No
 
 // Create makes a notification template
 func (s *service) Create(ctx context.Context, nTemplate template.NotificationTemplate) error {
-	log.Info("create service")
+	s.logger.Info("create service")
 	if err := s.repository.CreateNotificationTemplate(ctx, nTemplate); err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("create notification template repository return error")
+		s.logger.WithFields(logrus.Fields{"error": err}).Error("create notification template repository return error")
 		return ErrCmdRepository
 	}
 
@@ -43,11 +43,11 @@ func (s *service) Create(ctx context.Context, nTemplate template.NotificationTem
 
 // GetByID returns an notification template given by id
 func (s *service) GetByID(ctx context.Context, id string) (template.NotificationTemplate, error) {
-	log.Info("getbyID service")
+	s.logger.Info("getbyID service")
 
 	template, err := s.repository.GetNotificationTemplateByID(ctx, id)
 	if err != nil {
-		log.WithFields(log.Fields{"error": err}).Error("get notification template byid return error")
+		s.logger.WithFields(logrus.Fields{"error": err}).Error("get notification template byid return error")
 
 		if err == sql.ErrNoRows {
 			return template, ErrNotificationNotFound
@@ -61,7 +61,7 @@ func (s *service) GetByID(ctx context.Context, id string) (template.Notification
 func (s *service) Count(ctx context.Context) (int, error) {
 	count, err := s.repository.CountNotificationTemplate(ctx)
 	if err != nil {
-		log.Error(err)
+		s.logger.Error(err)
 		return count, ErrCmdRepository
 	}
 	return count, nil

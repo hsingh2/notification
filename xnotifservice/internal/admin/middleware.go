@@ -2,17 +2,16 @@ package admin
 
 import (
 	"context"
-
-	"github.com/go-kit/kit/log"
-
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Middleware describes a service middleware.
 type Middleware func(service Service) Service
 
 //LoggingMiddleware ...
-func LoggingMiddleware(logger log.Logger) Middleware {
+func LoggingMiddleware(logger *logrus.Logger) Middleware {
 	return func(next Service) Service {
 		return &loggingMiddleware{
 			next:   next,
@@ -23,19 +22,28 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 
 type loggingMiddleware struct {
 	next   Service
-	logger log.Logger
+	logger *logrus.Logger
 }
 
 func (mw loggingMiddleware) Health(ctx context.Context) (status string, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "Health", "took", "healthstatus", status, "err", err, time.Since(begin))
+		mw.logger.WithFields(logrus.Fields{"method": "Health",
+			"request":  "/health",
+			"err":      err,
+			"response": status,
+			"took":     time.Since(begin)}).Info("health middleware")
 	}(time.Now())
+
 	return mw.next.Health(ctx)
 }
 
 func (mw loggingMiddleware) Token(ctx context.Context) (token string, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "Health", "took", "token", token, "err", err, time.Since(begin))
+		mw.logger.WithFields(logrus.Fields{"method": "Health",
+			"request":  "/token",
+			"err":      err,
+			"response": token,
+			"took":     time.Since(begin)}).Info("token middleware")
 	}(time.Now())
 	return mw.next.Token(ctx)
 }

@@ -22,11 +22,11 @@ import (
 	"github.com/gorilla/mux"
 	"gopkg.in/yaml.v2"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 var (
-	logger        log.Logger
+	logger        = logrus.New()
 	serviceConfig config.Config
 	errs          chan error
 	db            *sql.DB
@@ -40,41 +40,30 @@ const (
 )
 
 func init() {
-	//initialize logger
-	// logger = log.NewLogfmtLogger(os.Stderr)
-	// logger = log.NewSyncLogger(logger)
-	// logger = level.NewFilter(logger, level.AllowDebug())
-	// logger = log.With(logger,
-	// 	"servicename", appName,
-	// 	"time", log.DefaultTimestampUTC,
-	// 	"caller", log.DefaultCaller,
-	// )
 
 	// Log as JSON instead of the default ASCII formatter.
-
-	logger := log.New()
-	logger.SetFormatter(&log.JSONFormatter{})
+	logger.SetFormatter(&logrus.JSONFormatter{})
 	logger.SetReportCaller(true)
 	logger.SetOutput(os.Stdout)
-	logger.SetLevel(log.WarnLevel)
+	logger.SetLevel(logrus.WarnLevel)
 
 	//initialize the configs
 	configs, err := ioutil.ReadFile(configFile)
 	if err != nil {
-		log.WithFields(log.Fields{"error": err, "filename": configFile}).Error("invalid service configuration provided file supplied")
+		logger.WithFields(logrus.Fields{"error": err, "filename": configFile}).Error("invalid service configuration provided file supplied")
 		//level.Error(logger).Log("error", "invalid service configuration provided file supplied", "Filename", configFile)
 		os.Exit(1)
 	}
 	//unmarshall service configs
 	if err := yaml.Unmarshal(configs, &serviceConfig); err != nil {
-		log.WithFields(log.Fields{"error": err, "filename": configFile}).Error("unable to unmarshal the config file")
+		logger.WithFields(logrus.Fields{"error": err, "filename": configFile}).Error("unable to unmarshal the config file")
 		os.Exit(1)
 	}
 
 	// Connect to the "ordersdb" database
 	db, err = sql.Open("postgres", "localhost:26257/notificationdb?sslmode=disable")
 	if err != nil {
-		log.WithFields(log.Fields{"error": err, "dbconn": "localhost:26257/notificationdb?sslmode=disable"}).Error("failed to open database connection")
+		logger.WithFields(logrus.Fields{"error": err, "dbconn": "localhost:26257/notificationdb?sslmode=disable"}).Error("failed to open database connection")
 		//level.Error(logger).Log("error", "failed to open database connection", "DBError", db)
 		os.Exit(1)
 	}

@@ -10,6 +10,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/hashicorp/consul/api v1.6.0
 	github.com/lib/pq v1.8.0 // indirect
+	github.com/prometheus/common v0.7.0
 	github.com/sirupsen/logrus v1.4.2
 	gopkg.in/yaml.v2 v2.3.0
 )

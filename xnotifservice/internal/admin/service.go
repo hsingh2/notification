@@ -3,12 +3,12 @@ package admin
 import (
 	"context"
 
-	"github.com/go-kit/kit/log"
+	"github.com/sirupsen/logrus"
 )
 
 // service implements the Admin Service
 type service struct {
-	logger *log.Logger
+	logger *logrus.Logger
 }
 
 // Service ...
@@ -18,7 +18,7 @@ type Service interface {
 }
 
 // NewAdminService ...
-func NewAdminService(logger *log.Logger) Service {
+func NewAdminService(logger *logrus.Logger) Service {
 	return &service{logger}
 }
 

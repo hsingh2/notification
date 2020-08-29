@@ -6,11 +6,11 @@ import (
 	"time"
 
 	template "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 //LoggingMiddleware ...
-func LoggingMiddleware(logger *log.Logger) Middleware {
+func LoggingMiddleware(logger *logrus.Logger) Middleware {
 	return func(next template.NotificationTemplateService) template.NotificationTemplateService {
 		return &loggingMiddleware{
 			next:   next,
@@ -21,12 +21,12 @@ func LoggingMiddleware(logger *log.Logger) Middleware {
 
 type loggingMiddleware struct {
 	next   template.NotificationTemplateService
-	logger *log.Logger
+	logger *logrus.Logger
 }
 
 func (mw loggingMiddleware) Create(ctx context.Context, template template.NotificationTemplate) (err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "Create",
+		mw.logger.WithFields(logrus.Fields{"method": "Create",
 			"request": template,
 			"err":     err,
 			"took":    time.Since(begin)}).Info("create notificationtemplate middleware")
@@ -37,7 +37,7 @@ func (mw loggingMiddleware) Create(ctx context.Context, template template.Notifi
 
 func (mw loggingMiddleware) GetByID(ctx context.Context, id string) (template template.NotificationTemplate, err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "GetByID",
+		mw.logger.WithFields(logrus.Fields{"method": "GetByID",
 			"request":  id,
 			"err":      err,
 			"response": template,
@@ -48,7 +48,7 @@ func (mw loggingMiddleware) GetByID(ctx context.Context, id string) (template te
 
 func (mw loggingMiddleware) Count(ctx context.Context) (count int, err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "Count",
+		mw.logger.WithFields(logrus.Fields{"method": "Count",
 			"request":  "count all",
 			"err":      err,
 			"response": count,
@@ -60,7 +60,7 @@ func (mw loggingMiddleware) Count(ctx context.Context) (count int, err error) {
 
 func (mw loggingMiddleware) Delete(ctx context.Context, id string) (err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "Delete",
+		mw.logger.WithFields(logrus.Fields{"method": "Delete",
 			"request": id,
 			"err":     err,
 			"took":    time.Since(begin)}).Info("delete notificationtemplate middleware")
@@ -70,7 +70,7 @@ func (mw loggingMiddleware) Delete(ctx context.Context, id string) (err error) {
 
 func (mw loggingMiddleware) GetByPage(ctx context.Context, id string) (templates []template.NotificationTemplate, err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "GetByPage",
+		mw.logger.WithFields(logrus.Fields{"method": "GetByPage",
 			"request":  id,
 			"err":      err,
 			"response": templates,
@@ -81,7 +81,7 @@ func (mw loggingMiddleware) GetByPage(ctx context.Context, id string) (templates
 
 func (mw loggingMiddleware) Update(ctx context.Context, template template.NotificationTemplate) (updated template.NotificationTemplate, err error) {
 	defer func(begin time.Time) {
-		mw.logger.WithFields(log.Fields{"method": "Update",
+		mw.logger.WithFields(logrus.Fields{"method": "Update",
 			"request":  template,
 			"err":      err,
 			"response": updated,

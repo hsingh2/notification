@@ -7,7 +7,7 @@ import (
 
 	template "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate"
 	"github.com/cockroachdb/cockroach-go/crdb"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 //Error
@@ -16,16 +16,16 @@ var (
 )
 
 type repository struct {
-	db  *sql.DB
-	log *log.Logger
+	db     *sql.DB
+	logger *logrus.Logger
 }
 
 // New returns a concrete repository backed by CockroachDB
-func New(db *sql.DB, logger *log.Logger) (template.Repository, error) {
+func New(db *sql.DB, logger *logrus.Logger) (template.Repository, error) {
 	// return  repository
 	return &repository{
-		db:  db,
-		log: logger,
+		db:     db,
+		logger: logger,
 	}, nil
 }
 
