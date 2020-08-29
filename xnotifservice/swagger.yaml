@@ -1,0 +1,64 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  CreateNotificationTemplateRequest:
+    properties:
+      NotificationTemplate:
+        $ref: '#/definitions/NotificationTemplate'
+    title: CreateNotificationTemplateRequest ...
+    type: object
+    x-go-package: cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate/transport
+  CreateNotificationTemplateResponse:
+    properties:
+      error:
+        type: string
+        x-go-name: Err
+      id:
+        type: string
+        x-go-name: ID
+    title: CreateNotificationTemplateResponse ...
+    type: object
+    x-go-package: cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate/transport
+  NotificationTemplate:
+    properties:
+      name:
+        type: string
+        x-go-name: Name
+    title: NotificationTemplate ...
+    type: object
+    x-go-package: cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate
+host: some-url.com
+info:
+  description: Documentation of our awesome API.
+  title: classification awesome.
+  version: 1.0.0
+paths:
+  /api/v1/notificationTemplates:
+    post:
+      operationId: idOfFoobarEndpoint
+      parameters:
+      - description: This text will appear as description of your request body.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/CreateNotificationTemplateRequest'
+      responses:
+        "200":
+          $ref: '#/responses/notificationTemplates'
+      summary: Notification Create Endpoint.
+      tags:
+      - notification-tag
+produces:
+- application/json
+responses:
+  foobarResponse:
+    description: This text will appear as description of your response body.
+    schema:
+      $ref: '#/definitions/CreateNotificationTemplateResponse'
+schemes:
+- http
+securityDefinitions:
+  basic:
+    type: basic
+swagger: "2.0"
