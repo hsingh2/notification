@@ -11,6 +11,10 @@ import (
 	sd "github.com/hashicorp/consul/api"
 )
 
+/*
+ *This should be a wrapper library which does it for me
+ *wrapper interface implements library methods
+ */
 type client struct {
 	consul       *sd.Client
 	registration *sd.AgentServiceRegistration
@@ -28,7 +32,7 @@ type ServiceDiscovery interface {
 	//Service(service, tag string, passingOnly bool, queryOpts *api.QueryOptions) ([]*api.ServiceEntry, *api.QueryMeta, error)
 
 	// Key Value
-	KV() error
+	KV(string) error
 }
 
 //NewSDClient ...
@@ -76,6 +80,7 @@ func (c *client) Service(service, tag string, passingOnly bool, queryOpts *api.Q
 	return c.consul.Health().Service(service, tag, passingOnly, queryOpts)
 }
 
-func (c *client) KV() error {
+func (c *client) KV(key string) error {
+	//c.consul.KV().Keys()
 	return nil
 }

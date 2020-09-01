@@ -33,6 +33,11 @@ func AddAdminServiceRoutes(router *mux.Router, scvEndpoint Endpoints, options []
 		options...,
 	))
 
+	// Serve static files for the swagger UI
+
+	sh := http.StripPrefix("/notification/swagger", http.FileServer(http.Dir("../../swagger-ui-dist/")))
+	router.PathPrefix("/notification/swagger").Handler(sh)
+
 	return
 }
 

@@ -26,8 +26,10 @@ func MakeEndpoints(s template.NotificationTemplateService) Endpoints {
 func makeCreateEndpoint(s template.NotificationTemplateService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateNotificationTemplateRequest) // type assertion
-		err := s.Create(ctx, req.NotificationTemplate)
-		return CreateNotificationTemplateResponse{Err: err}, nil
+		template := template.NotificationTemplate{Name: req.Name, Content: req.Content, Type: req.Type, Description: req.Description}
+		resp, err := s.Create(ctx, template)
+		return CreateNotificationTemplateResponse{ID: resp.ID, Name: resp.Name,
+			Type: resp.Type, Content: resp.Content, Description: resp.Description, Err: err}, nil
 	}
 }
 
@@ -35,7 +37,7 @@ func makeGetByIDEndpoint(s template.NotificationTemplateService) endpoint.Endpoi
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetNotificationTemplateByIDRequest)
 		response, err := s.GetByID(ctx, req.ID)
-		return GetNotificationTemplateByIDResponse{Template: response, Err: err}, nil
+		return GetNotificationTemplateByIDResponse{response, err}, nil
 	}
 }
 

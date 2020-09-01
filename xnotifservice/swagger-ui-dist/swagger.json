@@ -1,0 +1,170 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation of Notification Service API.",
+    "title": "Notification",
+    "version": "1.0.0"
+  },
+  "host": "localhost:9213",
+  "basePath": "/",
+  "paths": {
+    "/api/v1/notificationTemplates": {
+      "post": {
+        "description": "API to create a NotificationTemplate",
+        "tags": [
+          "NotificationTemplate"
+        ],
+        "operationId": "createNotificationTemplate",
+        "parameters": [
+          {
+            "description": "This text will appear as description of your request body.",
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateNotificationTemplateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createResponse"
+          }
+        }
+      }
+    },
+    "/api/v1/notificationTemplates/{id}": {
+      "get": {
+        "description": "API to get one NotificationTemplate by id",
+        "tags": [
+          "NotificationTemplate"
+        ],
+        "operationId": "getNotificationTemplate",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ID",
+            "description": "The ID of the pet",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateNotificationTemplateRequest": {
+      "type": "object",
+      "title": "CreateNotificationTemplateRequest ...",
+      "properties": {
+        "content": {
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate/transport"
+    },
+    "CreateNotificationTemplateResponse": {
+      "type": "object",
+      "title": "CreateNotificationTemplateResponse ...",
+      "properties": {
+        "content": {
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "error": {
+          "type": "string",
+          "x-go-name": "Err"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate/transport"
+    },
+    "NotificationTemplate": {
+      "type": "object",
+      "title": "NotificationTemplate ...",
+      "properties": {
+        "content": {
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate"
+    }
+  },
+  "responses": {
+    "createResponse": {
+      "description": "Success response for the create Notification Template.",
+      "schema": {
+        "$ref": "#/definitions/CreateNotificationTemplateResponse"
+      }
+    },
+    "getResponse": {
+      "schema": {
+        "$ref": "#/definitions/NotificationTemplate"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  }
+}

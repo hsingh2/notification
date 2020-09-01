@@ -7,6 +7,8 @@ import (
 
 	template "cto-github.cisco.com/NFV-BU/xnotifservice/internal/notificationtemplate"
 	"github.com/sirupsen/logrus"
+
+	"github.com/google/uuid"
 )
 
 //Error
@@ -31,14 +33,18 @@ func NewTemplateService(rep template.Repository, logger *logrus.Logger) template
 }
 
 // Create makes a notification template
-func (s *service) Create(ctx context.Context, nTemplate template.NotificationTemplate) error {
+func (s *service) Create(ctx context.Context, nTemplate template.NotificationTemplate) (template.NotificationTemplate, error) {
 	s.logger.Info("create service")
-	if err := s.repository.CreateNotificationTemplate(ctx, nTemplate); err != nil {
+	//add id
+	nTemplate.ID = uuid.New().String()
+
+	response, err := s.repository.CreateNotificationTemplate(ctx, nTemplate)
+	if err != nil {
 		s.logger.WithFields(logrus.Fields{"error": err}).Error("create notification template repository return error")
-		return ErrCmdRepository
+		return template.NotificationTemplate{}, ErrCmdRepository
 	}
 
-	return nil
+	return response, nil
 }
 
 // GetByID returns an notification template given by id
@@ -73,11 +79,21 @@ func (s *service) GetByPage(context.Context, string) ([]template.NotificationTem
 }
 
 //Update updates the notification template
-func (s *service) Update(context.Context, template.NotificationTemplate) (template.NotificationTemplate, error) {
-	return template.NotificationTemplate{}, nil
+func (s *service) Update(ctx context.Context, request template.NotificationTemplate) (template.NotificationTemplate, error) {
+	response, err := s.repository.UpdateNotificationTemplate(ctx, request)
+	if err != nil {
+		s.logger.WithFields(logrus.Fields{"error": err}).Error("update notification template return error")
+		return template.NotificationTemplate{}, ErrCmdRepository
+	}
+	return response, nil
 }
 
 //Delete deletes notification template
-func (s *service) Delete(context.Context, string) error {
+func (s *service) Delete(ctx context.Context, id string) error {
+	if err := s.repository.DeleteNotificationTemplate(ctx, id); err != nil {
+		s.logger.WithFields(logrus.Fields{"error": err}).Error("delete notification template return error")
+		return ErrCmdRepository
+	}
+
 	return nil
 }

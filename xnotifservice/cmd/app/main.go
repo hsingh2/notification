@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -23,6 +24,10 @@ import (
 	"gopkg.in/yaml.v2"
 
 	"github.com/sirupsen/logrus"
+
+	runtime "github.com/banzaicloud/logrus-runtime-formatter"
+
+	_ "github.com/lib/pq"
 )
 
 var (
@@ -42,7 +47,12 @@ const (
 func init() {
 
 	// Log as JSON instead of the default ASCII formatter.
-	logger.SetFormatter(&logrus.JSONFormatter{})
+	// Log as JSON instead of the default ASCII formatter, but wrapped with the runtime Formatter.
+	formatter := runtime.Formatter{ChildFormatter: &logrus.JSONFormatter{TimestampFormat: "2006-01-02 15:04:05"}}
+	// Enable line number logging as well
+	formatter.Line = true
+
+	logger.SetFormatter(&formatter)
 	logger.SetOutput(os.Stdout)
 	logger.SetLevel(logrus.InfoLevel)
 
@@ -60,9 +70,9 @@ func init() {
 	}
 
 	// Connect to the "ordersdb" database
-	db, err = sql.Open("postgres", "localhost:26257/notificationdb?sslmode=disable")
+	db, err = sql.Open("postgres", "postgresql://root@localhost:26257/notification?sslmode=disable")
 	if err != nil {
-		logger.WithFields(logrus.Fields{"error": err, "dbconn": "localhost:26257/notificationdb?sslmode=disable"}).Error("failed to open database connection")
+		logger.WithFields(logrus.Fields{"error": err, "dbconn": "localhost:26257/notification?sslmode=disable"}).Error("failed to open database connection")
 		os.Exit(1)
 	}
 
@@ -82,6 +92,7 @@ func init() {
 }
 
 func main() {
+
 	logger.WithField("msg", "xnotification service started...").Info()
 	defer logger.WithField("msg", "xnotification service ended.").Info()
 
@@ -104,6 +115,18 @@ func main() {
 
 	//setup router
 	router := mux.NewRouter()
+
+	router.HandleFunc("/debug/pprof/", pprof.Index)
+	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+	router.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	router.HandleFunc("/debug/pprof/trace", pprof.Trace)
+	router.Handle("/debug/pprof/goroutine", pprof.Handler("goroutine"))
+	router.Handle("/debug/pprof/heap", pprof.Handler("heap"))
+	router.Handle("/debug/pprof/threadcreate", pprof.Handler("threadcreate"))
+	router.Handle("/debug/pprof/block", pprof.Handler("block"))
+	router.Handle("/debug/vars", http.DefaultServeMux)
+
 	//add NotificationTemplate routes to the router
 	httptransport.NewNotificationTemplateService(router, templateEndpoints, serverOptions)
 	admin.AddAdminServiceRoutes(router, adminEndpoints, serverOptions)

@@ -1,11 +1,11 @@
-// Package docs classification awesome.
+// Package docs Notification
 //
-// Documentation of our awesome API.
+// Documentation of Notification Service API.
 //
 //     Schemes: http
 //     BasePath: /
 //     Version: 1.0.0
-//     Host: some-url.com
+//     Host: localhost:9213
 //
 //     Consumes:
 //     - application/json

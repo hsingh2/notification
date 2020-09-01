@@ -1,0 +1,176 @@
+# cto-github.cisco.com/NFV-BU/go-msx v0.1.78
+cto-github.cisco.com/NFV-BU/go-msx/cli
+cto-github.cisco.com/NFV-BU/go-msx/config
+cto-github.cisco.com/NFV-BU/go-msx/config/args
+cto-github.cisco.com/NFV-BU/go-msx/config/pflagprovider
+cto-github.cisco.com/NFV-BU/go-msx/exec
+cto-github.cisco.com/NFV-BU/go-msx/fs
+cto-github.cisco.com/NFV-BU/go-msx/log
+cto-github.cisco.com/NFV-BU/go-msx/resource
+cto-github.cisco.com/NFV-BU/go-msx/types
+# cto-github.cisco.com/NFV-BU/go-msx-build v0.1.6
+## explicit
+cto-github.cisco.com/NFV-BU/go-msx-build/pkg
+cto-github.cisco.com/NFV-BU/go-msx-build/pkg/maven
+# github.com/BurntSushi/toml v0.3.1
+github.com/BurntSushi/toml
+# github.com/armon/go-metrics v0.0.0-20190430140413-ec5e00d3c878
+github.com/armon/go-metrics
+# github.com/asaskevich/govalidator v0.0.0-20200819183940-29e1ff8eb0bb
+## explicit
+# github.com/banzaicloud/logrus-runtime-formatter v0.0.0-20190729070250-5ae5475bae5e
+## explicit
+github.com/banzaicloud/logrus-runtime-formatter
+# github.com/bmatcuk/doublestar v1.1.5
+github.com/bmatcuk/doublestar
+# github.com/cockroachdb/cockroach-go v2.0.1+incompatible
+## explicit
+github.com/cockroachdb/cockroach-go/crdb
+# github.com/fatih/color v1.9.0
+github.com/fatih/color
+# github.com/ghodss/yaml v1.0.0
+github.com/ghodss/yaml
+# github.com/go-ini/ini v1.48.0
+github.com/go-ini/ini
+# github.com/go-kit/kit v0.10.0
+## explicit
+github.com/go-kit/kit/endpoint
+github.com/go-kit/kit/log
+github.com/go-kit/kit/transport
+github.com/go-kit/kit/transport/http
+# github.com/go-logfmt/logfmt v0.5.0
+github.com/go-logfmt/logfmt
+# github.com/go-openapi/runtime v0.19.21
+## explicit
+# github.com/go-openapi/spec v0.19.9
+## explicit
+# github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
+github.com/go-ozzo/ozzo-validation
+# github.com/go-swagger/go-swagger v0.25.0
+## explicit
+# github.com/gocql/gocql v0.0.0-20191013011951-93ce931da9e1
+github.com/gocql/gocql
+github.com/gocql/gocql/internal/lru
+github.com/gocql/gocql/internal/murmur
+github.com/gocql/gocql/internal/streams
+# github.com/golang/snappy v0.0.1
+github.com/golang/snappy
+# github.com/google/uuid v1.1.1
+## explicit
+github.com/google/uuid
+# github.com/gorilla/handlers v1.5.0
+## explicit
+# github.com/gorilla/mux v1.8.0
+## explicit
+github.com/gorilla/mux
+# github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed
+github.com/hailocab/go-hostpool
+# github.com/hashicorp/consul/api v1.6.0
+## explicit
+github.com/hashicorp/consul/api
+# github.com/hashicorp/go-cleanhttp v0.5.1
+github.com/hashicorp/go-cleanhttp
+# github.com/hashicorp/go-hclog v0.12.0
+github.com/hashicorp/go-hclog
+# github.com/hashicorp/go-immutable-radix v1.0.0
+github.com/hashicorp/go-immutable-radix
+# github.com/hashicorp/go-rootcerts v1.0.2
+github.com/hashicorp/go-rootcerts
+# github.com/hashicorp/go-uuid v1.0.2
+github.com/hashicorp/go-uuid
+# github.com/hashicorp/golang-lru v0.5.3
+github.com/hashicorp/golang-lru/simplelru
+# github.com/hashicorp/serf v0.9.3
+github.com/hashicorp/serf/coordinate
+# github.com/inconshreveable/mousetrap v1.0.0
+github.com/inconshreveable/mousetrap
+# github.com/konsorten/go-windows-terminal-sequences v1.0.2
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/kr/pretty v0.2.1
+## explicit
+# github.com/labstack/echo v3.3.10+incompatible
+github.com/labstack/echo
+# github.com/labstack/gommon v0.2.9
+github.com/labstack/gommon/color
+github.com/labstack/gommon/log
+# github.com/lib/pq v1.8.0
+## explicit
+github.com/lib/pq
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/magiconair/properties v1.8.2
+## explicit
+github.com/magiconair/properties
+# github.com/mailru/easyjson v0.7.6
+## explicit
+# github.com/mattn/go-colorable v0.1.6
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.12
+github.com/mattn/go-isatty
+# github.com/mitchellh/go-homedir v1.1.0
+github.com/mitchellh/go-homedir
+# github.com/mitchellh/mapstructure v1.3.3
+## explicit
+github.com/mitchellh/mapstructure
+# github.com/otiai10/copy v1.0.2
+github.com/otiai10/copy
+# github.com/pdrum/swagger-automation v0.0.0-20190629163613-c8c7c80ba858
+## explicit
+github.com/pdrum/swagger-automation/api
+# github.com/pkg/errors v0.9.1
+github.com/pkg/errors
+# github.com/radovskyb/watcher v1.0.7
+github.com/radovskyb/watcher
+# github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749
+github.com/shurcooL/httpfs/filter
+github.com/shurcooL/httpfs/vfsutil
+# github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
+github.com/shurcooL/vfsgen
+# github.com/sirupsen/logrus v1.4.2
+## explicit
+github.com/sirupsen/logrus
+# github.com/spf13/afero v1.3.4
+## explicit
+# github.com/spf13/cobra v0.0.5
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.5
+github.com/spf13/pflag
+# github.com/spf13/viper v1.7.1
+## explicit
+# github.com/valyala/bytebufferpool v1.0.0
+github.com/valyala/bytebufferpool
+# github.com/valyala/fasttemplate v1.0.1
+github.com/valyala/fasttemplate
+# github.com/yosuke-furukawa/json5 v0.1.1
+github.com/yosuke-furukawa/json5/encoding/json5
+# go.mongodb.org/mongo-driver v1.4.0
+## explicit
+# golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
+golang.org/x/crypto/acme
+golang.org/x/crypto/acme/autocert
+# golang.org/x/net v0.0.0-20200822124328-c89045814202
+## explicit
+golang.org/x/net/idna
+# golang.org/x/sys v0.0.0-20200828194041-157a740278f4
+## explicit
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+# golang.org/x/text v0.3.3
+golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
+golang.org/x/text/unicode/norm
+# golang.org/x/tools v0.0.0-20200828161849-5deb26317202
+## explicit
+# golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
+## explicit
+# gopkg.in/inf.v0 v0.9.1
+gopkg.in/inf.v0
+# gopkg.in/ini.v1 v1.60.2
+## explicit
+# gopkg.in/pipe.v2 v2.0.0-20140414041502-3c2ca4d52544
+gopkg.in/pipe.v2
+# gopkg.in/yaml.v2 v2.3.0
+## explicit
+gopkg.in/yaml.v2
+# github.com/hashicorp/consul v1.4.0 => github.com/hashicorp/consul v1.6.0

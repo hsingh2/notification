@@ -45,14 +45,37 @@ func NewNotificationTemplateService(r *mux.Router, svcEndpoints transport.Endpoi
 		encodeCountResponse,
 		options...,
 	))
+
+	// HTTP Post - /api/v1/notificationTemplates
+	r.Methods(http.MethodPut).Path("/api/v1/notificationTemplates").Handler(kithttp.NewServer(
+		svcEndpoints.Create,
+		decodeUpdateRequest,
+		encodeUpdateResponse,
+		options...,
+	))
+
 	return
 }
 
 func decodeCreateRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 	var req transport.CreateNotificationTemplateRequest
-	if e := json.NewDecoder(r.Body).Decode(&req.NotificationTemplate); e != nil {
+	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
 		return nil, e
 	}
+	return req, nil
+}
+
+func decodeUpdateRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+	if !ok {
+		return nil, ErrBadRouting
+	}
+	var req transport.UpdateNotificationTemplateRequest
+	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
+		return nil, e
+	}
+	req.ID = id
 	return req, nil
 }
 
@@ -71,6 +94,11 @@ func encodeCountResponse(ctx context.Context, w http.ResponseWriter, response in
 }
 
 func encodeCreateResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	return json.NewEncoder(w).Encode(response)
+}
+
+func encodeUpdateResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return json.NewEncoder(w).Encode(response)
 }

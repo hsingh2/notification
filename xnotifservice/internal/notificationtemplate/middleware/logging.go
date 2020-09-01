@@ -24,15 +24,17 @@ type loggingMiddleware struct {
 	logger *logrus.Logger
 }
 
-func (mw loggingMiddleware) Create(ctx context.Context, template template.NotificationTemplate) (err error) {
+func (mw loggingMiddleware) Create(ctx context.Context, request template.NotificationTemplate) (response template.NotificationTemplate, err error) {
 	defer func(begin time.Time) {
 		mw.logger.WithFields(logrus.Fields{"method": "Create",
-			"request": template,
-			"err":     err,
-			"took":    time.Since(begin)}).Info("create notificationtemplate middleware")
+			"request":  request,
+			"err":      err,
+			"response": response,
+			"took":     time.Since(begin)}).Info("create notificationtemplate middleware")
+
 	}(time.Now())
 
-	return mw.next.Create(ctx, template)
+	return mw.next.Create(ctx, request)
 }
 
 func (mw loggingMiddleware) GetByID(ctx context.Context, id string) (template template.NotificationTemplate, err error) {

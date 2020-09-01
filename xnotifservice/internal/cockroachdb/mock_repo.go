@@ -18,8 +18,8 @@ func MockRepository() template.Repository {
 func (mck mockClient) GetNotificationTemplateByID(context.Context, string) (template.NotificationTemplate, error) {
 	return template.NotificationTemplate{Name: "yasemin"}, nil
 }
-func (mck mockClient) CreateNotificationTemplate(context.Context, template.NotificationTemplate) error {
-	return nil
+func (mck mockClient) CreateNotificationTemplate(context.Context, template.NotificationTemplate) (template.NotificationTemplate, error) {
+	return template.NotificationTemplate{}, nil
 }
 func (mck mockClient) CountNotificationTemplate(context.Context) (int, error) {
 	return 100, nil
